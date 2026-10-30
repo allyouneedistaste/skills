@@ -1,6 +1,6 @@
 # All You Need Is Taste: skills
 
-Agent skills from [All You Need Is Taste](https://github.com/allyouneedistaste), free under the MIT licence.
+Agent skills from [All You Need Is Taste](https://allyouneedistaste.com/), free under the MIT licence.
 
 ## runway-site
 
