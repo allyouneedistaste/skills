@@ -1,0 +1,33 @@
+/* Starter styles: only enough to run. The site's own design replaces all of it. */
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #f1f0ea; color: #1d1b18; font: 17px/1.45 system-ui, sans-serif; }
+img { display: block; max-width: 100%; height: auto; }
+.skip { position: absolute; left: -999px; }
+.skip:focus { left: 16px; top: 16px; z-index: 60; background: #fff; padding: 8px 12px; }
+
+.bar { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 14px 20px; pointer-events: none; }
+.bar a { pointer-events: auto; color: #fff; mix-blend-mode: difference; text-decoration: none; font-weight: 600; }
+
+.hero { min-height: 90vh; padding: 16vh 8vw; background: #24211e; color: #fff; }
+.hero h1 { font-size: clamp(56px, 9vw, 130px); line-height: 1; margin: 0 0 20px; }
+
+.chapter { padding: 120px 8vw 110px; background: var(--ground); color: var(--on-ground); }
+/* width: fit-content keeps a standing title's box tight round its letters. */
+.chapter h2 { width: fit-content; font-size: clamp(56px, 8vw, 120px); line-height: 1; margin: 0 0 18px; font-weight: 700; }
+.chapter__line { margin: 0 0 48px; max-width: 48ch; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.card { background: #f1f0ea; color: #1d1b18; padding: 20px; border: 1.25px solid #1d1b18; }
+.card--lead { grid-column: 1 / -1; }
+.card h3 { margin: 0 0 8px; font-size: 20px; }
+.card p { margin: 0 0 16px; }
+.pic { aspect-ratio: 4 / 3; background: #c9c6bb; margin-bottom: 14px; }
+.card--lead .pic { aspect-ratio: 21 / 8; }
+.act { font: inherit; font-size: 14px; min-height: 44px; padding: 0 16px; background: #1d1b18; color: #f1f0ea; border: 0; cursor: pointer; touch-action: manipulation; }
+.act:focus-visible, .toggle:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+@media (max-width: 800px) { .cards { grid-template-columns: 1fr; } .chapter { padding: 80px 20px; } .hero { padding: 14vh 20px; } }
+
+.end { padding: 60px 8vw; background: #24211e; color: #fff; }
+
+/* The toggle: real, fixed, above the stage (41). Only in the DOM where the mode can run. */
+.toggle { position: fixed; left: 24px; bottom: calc(24px + env(safe-area-inset-bottom)); z-index: 50; min-height: 44px; padding: 0 20px; border-radius: 99px; border: 1px solid rgb(255 255 255 / .5); background: #111; color: #fff; font: 600 15px/1 system-ui, sans-serif; cursor: pointer; touch-action: manipulation; }
+@media (hover: hover) { .toggle:hover { background: #333; } .act:hover { background: #444; } }

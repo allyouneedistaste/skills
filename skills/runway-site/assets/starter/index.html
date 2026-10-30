@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Starter: it runs as it is, so the 3D mode can be proved before anything is designed. Replace every word, colour and block. -->
+<title>Site name · what it is</title>
+<meta name="description" content="One sentence: what this is and for whom.">
+<link rel="stylesheet" href="vendor/page-tips-into-3d-runway.css">
+<!-- After scripts/fonts.mjs: <link rel="stylesheet" href="vendor/fonts.css">, and preload the display face:
+     <link rel="preload" href="vendor/fonts/<display>-latin.woff2" as="font" type="font/woff2" crossorigin> -->
+<link rel="stylesheet" href="vendor/site.css">
+</head>
+<body>
+<a class="skip" href="#programme">Skip to the content</a>
+
+<!-- Fixed things stay OUTSIDE the root, above it (z-index over 41): the toggle, a header, an index, dialogs, forms. -->
+<header class="bar"><a href="#" class="bar__name">Site name</a></header>
+<div class="toggle-slot"></div>
+
+<!-- The root: everything that travels on the floor. It stays laid out, unseen, inside a canvas while tipped. -->
+<main id="programme" data-page-tips-into-3d-runway>
+  <section class="hero">
+    <h1>Site name</h1>
+    <p>One line that says what this is.</p>
+  </section>
+
+  <section class="chapter" style="--ground:#3e5c9a;--on-ground:#fff">
+    <h2 data-page-tips-into-3d-runway-part="title">First</h2>
+    <p class="chapter__line">One sentence on this chapter.</p>
+    <div class="cards">
+      <article class="card card--lead" data-page-tips-into-3d-runway-part="slab">
+        <div class="pic"></div>
+        <h3 data-page-tips-into-3d-runway-part="callout" data-page-tips-into-3d-runway-label="The lead">The lead thing of this chapter</h3>
+        <p>Two short lines about it, so small text can be judged on the floor.</p>
+        <button type="button" class="act">Do the thing</button>
+      </article>
+      <article class="card" data-page-tips-into-3d-runway-part="slab">
+        <div class="pic"></div>
+        <h3 data-page-tips-into-3d-runway-part="callout">A smaller thing</h3>
+        <p>One sentence about it.</p>
+        <button type="button" class="act">Do the thing</button>
+      </article>
+      <article class="card" data-page-tips-into-3d-runway-part="slab">
+        <div class="pic"></div>
+        <h3 data-page-tips-into-3d-runway-part="callout">Another thing</h3>
+        <p>One sentence about it.</p>
+        <button type="button" class="act">Do the thing</button>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter" style="--ground:#e8c877;--on-ground:#1d1b18">
+    <h2 data-page-tips-into-3d-runway-part="title">Second</h2>
+    <p class="chapter__line">One sentence on this chapter.</p>
+    <div class="cards">
+      <article class="card card--lead" data-page-tips-into-3d-runway-part="slab">
+        <div class="pic"></div>
+        <h3 data-page-tips-into-3d-runway-part="callout" data-page-tips-into-3d-runway-label="The lead">The lead thing of this chapter</h3>
+        <p>Two short lines about it.</p>
+        <button type="button" class="act">Do the thing</button>
+      </article>
+      <article class="card" data-page-tips-into-3d-runway-part="slab">
+        <div class="pic"></div>
+        <h3 data-page-tips-into-3d-runway-part="callout">A smaller thing</h3>
+        <p>One sentence about it.</p>
+        <button type="button" class="act">Do the thing</button>
+      </article>
+      <article class="card" data-page-tips-into-3d-runway-part="slab">
+        <div class="pic"></div>
+        <h3 data-page-tips-into-3d-runway-part="callout">Another thing</h3>
+        <p>One sentence about it.</p>
+        <button type="button" class="act">Do the thing</button>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter" style="--ground:#a63d2f;--on-ground:#fff">
+    <h2 data-page-tips-into-3d-runway-part="title">Third</h2>
+    <p class="chapter__line">One sentence on this chapter.</p>
+    <div class="cards">
+      <article class="card card--lead" data-page-tips-into-3d-runway-part="slab">
+        <div class="pic"></div>
+        <h3 data-page-tips-into-3d-runway-part="callout" data-page-tips-into-3d-runway-label="The lead">The lead thing of this chapter</h3>
+        <p>Two short lines about it.</p>
+        <button type="button" class="act">Do the thing</button>
+      </article>
+      <article class="card" data-page-tips-into-3d-runway-part="slab">
+        <div class="pic"></div>
+        <h3 data-page-tips-into-3d-runway-part="callout">A smaller thing</h3>
+        <p>One sentence about it.</p>
+        <button type="button" class="act">Do the thing</button>
+      </article>
+      <article class="card" data-page-tips-into-3d-runway-part="slab">
+        <div class="pic"></div>
+        <h3 data-page-tips-into-3d-runway-part="callout">Another thing</h3>
+        <p>One sentence about it.</p>
+        <button type="button" class="act">Do the thing</button>
+      </article>
+    </div>
+  </section>
+  <!-- The footer travels too: the floor ends on it. A fictional site's notice must be readable here. -->
+  <footer class="end"><p>What must close the page: address, contact, legal.</p></footer>
+</main>
+
+<script type="module" src="vendor/site.js"></script>
+</body>
+</html>
