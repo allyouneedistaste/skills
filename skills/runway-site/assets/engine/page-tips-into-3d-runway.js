@@ -230,8 +230,9 @@ export function mount(root, dress = {}) {
 
   // ---- upload: the band of page the floor shows, and each standing title ----
   function wantedBand(scale) {
-    const top = clamp(R0 - curve.L, 0, Math.max(0, pageH - curve.L));
-    return { top: Math.round(top), height: Math.round(Math.min(curve.L, pageH)), scale };
+    // A margin past both ends of the view: a band a little stale must never show its stretched edge.
+    const span = curve.L + H * 1.5, top = clamp(R0 - curve.L - H * 0.75, 0, Math.max(0, pageH - span));
+    return { top: Math.round(top), height: Math.round(Math.min(span, pageH)), scale };
   }
   // Copy a rectangle of an element (root by default) into a texture, at the texture's size.
   function copy(rect, tex, el = root) {
@@ -272,7 +273,7 @@ export function mount(root, dress = {}) {
     const moving = performance.now() - lastMove < 250;
     if (!moving && band.scale !== LOOK.texScale) return true;
     const want = wantedBand(band.scale);
-    return Math.abs(want.top - band.top) > H * 0.5;
+    return Math.abs(want.top - band.top) > H * (moving ? 0.2 : 0.05);
   }
 
   // ---- the props: wireframes of our own, as line segments, in units of one screen height ----
@@ -304,7 +305,7 @@ export function mount(root, dress = {}) {
   function frame(now) {
     if (!on) return;
     const before = focus;
-    focus += (target - focus) * 0.12;
+    focus += clamp((target - focus) * 0.12, -H * 0.5, H * 0.5); // capped, so a long jump never outruns the band
     if (Math.abs(focus - before) > 0.4) lastMove = now;
     const e = easeInOut(t), rise = easeInOut(clamp((t - LOOK.riseAt) / (1 - LOOK.riseAt), 0, 1));
     const cam = pose(e);
