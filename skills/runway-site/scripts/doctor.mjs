@@ -16,7 +16,7 @@ line(!!chrome, chrome ? `Chrome: ${chrome}` : 'Google Chrome not found (install 
 if (chrome && node >= 22) {
   const version = chromeVersion(chrome);
   console.log(`     Chrome version ${version ?? 'unknown'}`);
-  const probe = `(async () => { const a = await navigator.gpu?.requestAdapter(); return { api: 'layoutSubtree' in HTMLCanvasElement.prototype, gpu: !!a, copy: typeof GPUQueue !== 'undefined' && ('copyElementImageToTexture' in GPUQueue.prototype || 'drawElementImageToTexture' in GPUQueue.prototype) }; })()`;
+  const probe = `(async () => { const a = await navigator.gpu?.requestAdapter(); return { api: 'content' in HTMLCanvasElement.prototype || 'layoutSubtree' in HTMLCanvasElement.prototype, gpu: !!a, copy: typeof GPUQueue !== 'undefined' && ('copyElementImageToTexture' in GPUQueue.prototype || 'drawElementImageToTexture' in GPUQueue.prototype) }; })()`;
   for (const flag of [false, true]) {
     const b = await launch(chrome, { flag });
     const t = await b.tab(800, 600);
