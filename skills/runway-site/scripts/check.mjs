@@ -148,7 +148,7 @@ if (version && version < 157) {
   const t = await plain.tab(1440, 900);
   await t.goto(url);
   await delay(1200);
-  const api = await t.evaluate(`'layoutSubtree' in HTMLCanvasElement.prototype`);
+  const api = await t.evaluate(`'content' in HTMLCanvasElement.prototype || 'layoutSubtree' in HTMLCanvasElement.prototype`);
   if (!api) report(!(await t.evaluate(`!!document.querySelector(${JSON.stringify(TOGGLE)})`)), 'a browser without the feature gets no button');
   else note('this Chrome has the feature without the switch: the no-button case was not tested');
   plain.close();

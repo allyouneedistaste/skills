@@ -3,8 +3,8 @@
 // end curls up to face the camera, and the wheel travels the floor. The page stays
 // live and clickable. Self-contained, no imports.
 //
-// Built on HTML-in-Canvas (a <canvas layoutsubtree> lays the page out unseen and
-// GPUQueue.copyElementImageToTexture copies any band of it into a texture) and WebGPU.
+// Built on HTML-in-Canvas (a <canvas content="drawable"> lays the page out unseen and
+// GPUQueue.drawElementImageToTexture copies any band of it into a texture) and WebGPU.
 // Chrome 157+, or Chrome 147–156 with chrome://flags/#canvas-draw-element. Needs HTTPS or localhost.
 //
 //   import { mount, supported } from './page-tips-into-3d-runway.js';
@@ -59,7 +59,7 @@ const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
 
 /** True when this browser can draw a live page into WebGPU. */
 export function supported() {
-  return !!navigator.gpu && 'layoutSubtree' in HTMLCanvasElement.prototype && typeof GPUQueue !== 'undefined' &&
+  return !!navigator.gpu && ('content' in HTMLCanvasElement.prototype || 'layoutSubtree' in HTMLCanvasElement.prototype) && typeof GPUQueue !== 'undefined' &&
     ('copyElementImageToTexture' in GPUQueue.prototype || 'drawElementImageToTexture' in GPUQueue.prototype);
 }
 
@@ -220,6 +220,7 @@ export function mount(root, dress = {}) {
       Object.assign(twin.style, { position: 'absolute', left: '0', top: '0', margin: '0', padding: cs.padding, boxSizing: 'border-box',
         width: `${tl.x1 - tl.x0}px`, height: `${tl.y1 - tl.y0}px`, background: 'transparent', pointerEvents: 'none', visibility: 'visible' });
       twin.setAttribute('aria-hidden', 'true');
+      twin.setAttribute('drawable', '');
       canvas.append(twin);
       tl.twin = twin;
       tl.el.style.visibility = 'hidden';
@@ -239,7 +240,7 @@ export function mount(root, dress = {}) {
       q.copyElementImageToTexture({ source: el, sx: rect.x, sy: rect.y, swidth: rect.w, sheight: rect.h },
         { destination: { texture: tex, premultipliedAlpha: true }, width: tex.width, height: tex.height });
     else
-      q.drawElementImageToTexture({ element: el, sourceX: rect.x, sourceY: rect.y, sourceWidth: rect.w, sourceHeight: rect.h },
+      q.drawElementImageToTexture({ source: el, element: el, sourceX: rect.x, sourceY: rect.y, sourceWidth: rect.w, sourceHeight: rect.h },
         { texture: tex, size: { width: tex.width, height: tex.height }, premultipliedAlpha: true });
   }
   const makeTex = (w, h) => device.createTexture({ size: [w, h], format: 'rgba8unorm', usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST | GPUTextureUsage.RENDER_ATTACHMENT });
@@ -604,7 +605,9 @@ export function mount(root, dress = {}) {
       focus = target = clamp(scrollTop - (o.top + scrollTop) + H / 2, 0, pageH);
 
       canvas = document.createElement('canvas');
-      canvas.setAttribute('layoutsubtree', '');
+      // Chrome 157 and later ask for content="drawable" and a drawable child; 147–156 behind the switch for layoutsubtree.
+      if ('content' in canvas) canvas.setAttribute('content', 'drawable'); else canvas.setAttribute('layoutsubtree', '');
+      root.setAttribute('drawable', '');
       canvas.setAttribute(`data-${NAME}-stage`, '');
       overlay = document.createElement('canvas');
       overlay.setAttribute(`data-${NAME}-overlay`, '');
@@ -670,7 +673,7 @@ export function mount(root, dress = {}) {
     }
     removeEventListener('keydown', onKey);
     removeEventListener('resize', onResize);
-    if (placeholder?.isConnected) { root.removeAttribute(`data-${NAME}-tipped`); root.style.width = ''; root.style.pointerEvents = ''; placeholder.replaceWith(root); }
+    if (placeholder?.isConnected) { root.removeAttribute(`data-${NAME}-tipped`); root.removeAttribute('drawable'); root.style.width = ''; root.style.pointerEvents = ''; placeholder.replaceWith(root); }
     canvas?.remove(); overlay?.remove();
     document.documentElement.removeAttribute(`data-${NAME}-on`);
     for (const r of titleTex.values()) r.tex.destroy();
