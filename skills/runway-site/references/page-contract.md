@@ -66,16 +66,25 @@ the chapters do; return `''` for no figure.
 
 ## The toggle
 
-- A real `<button data-runway-toggle>`, fixed, created **only** when
-  `supported() && matchMedia('(pointer: fine) and (min-width: 1024px)').matches`.
+- A real `<button data-runway-toggle>`, fixed, created **only** when `supported()`, a
+  `navigator.gpu.requestAdapter()` that answers (ask again if a cold browser's first answer is
+  empty), and `matchMedia('(pointer: fine) and (min-width: 1024px)')`, followed through its `change`.
   Elsewhere it does not exist: no dead control, nothing that promises it. The engine
-  travels with a wheel and keys only, so phones never get it.
+  travels with a wheel and keys only, so phones never get it. The starter does all this: keep it.
+- Ignore clicks while a start is in flight, and remove the button if the start failed
+  (`runway.on` still false): the page stays flat. `onchange(false)` fires on a failed start too.
 - Its words change through `onchange(on)`. `aria-pressed`. 44 px tall. `:focus-visible`.
 - Its selector goes in `keepClear`.
 
+## Links while tipped
+
+Anchors do nothing while tipped: a link appears to work and the floor stays put. The starter's
+document listener sends every `a[href^="#"]` to `runway.travel()` instead: keep it, and test the page's
+main action from the floor. A ruler that names real distances must read them from the chapters, not from a fixed scale.
+
 ## A chapter index
 
-Fixed, outside the root. While tipped, anchors do nothing: on click call
+Fixed, outside the root. While tipped, on click call
 `runway.on ? runway.travel(section.offsetTop) : section.scrollIntoView()`, and read `runway.row` in a
 `requestAnimationFrame` loop for the "where you are" mark (flat: an IntersectionObserver). Stop the loop on `onchange(false)`.
 

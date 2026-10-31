@@ -661,6 +661,7 @@ export function mount(root, dress = {}) {
     } catch (err) {
       console.error(`${NAME}: could not tip the page`, err);
       teardown();
+      D.onchange(false);
     } finally { busy = false; }
   }
 
